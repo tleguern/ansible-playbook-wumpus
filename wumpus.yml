@@ -167,7 +167,7 @@
         death: yes
       when:
         - position is defined
-        - rooms[position]['pit'] or rooms[position]['wumpus']
+        - rooms[position]['pit'] or rooms[position]['wumpus'] or arrows == 0
 
     - name: Game over by pits.
       debug:
@@ -194,6 +194,17 @@
       when:
         - death
         - rooms[position]['wumpus']
+
+    - name: Game over by lack of arrows.
+      debug:
+        msg: |
+          You turn and look at your quiver, and realize with a sinking feeling
+          that you've just shot your last arrow (figuratively, too). Sensing this
+          with its psychic powers, the evil Wumpus rampages through the cave, finds
+          you, and with a mighty *ROAR* eats you alive!
+      when:
+        - death
+        - arrows == 0
 
     - include_tasks: the-end.yml
       when: death
