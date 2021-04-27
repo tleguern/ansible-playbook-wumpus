@@ -7,6 +7,7 @@
     bats_msg: ""
     pit_msg: ""
     wumpus_msg: ""
+    commands: ['move', 'shoot']
     rooms:
       "1":
         connect: ["2", "5", "8"]
@@ -119,6 +120,33 @@
         cacheable: yes
       when: arrows is not defined
 
+    - name: Verify input - command.
+      assert:
+        that:
+          - command in commands
+        fail_msg: "Accepted commands are 'move' and 'shoot' not '{{ command }}'"
+        quiet: yes
+      when: command is defined
+
+    - name: Verify input - room.
+      assert:
+        that:
+          - command is defined
+          - command == 'move'
+          - "room in rooms[position]['connect']"
+        fail_msg: "*Oof!*  (You hit the wall)"
+        quiet: yes
+      when: room is defined
+
+    - name: Move to another room.
+      set_fact:
+        position: "{{ room }}"
+        cacheable: yes
+      when:
+        - command is defined
+        - command == 'move'
+        - room is defined
+
     - name: Check for bats in the room.
       debug:
         msg: |
@@ -222,3 +250,25 @@
           {{ wumpus_msg }}
           There are tunnels to rooms {{ rooms[position]['connect'][0] }}, {{ rooms[position]['connect'][1] }}, and {{ rooms[position]['connect'][2] }}.
       when: not death
+
+    - debug:
+        msg: |
+          To play the game you have to run the playbook successively using the
+          option --extra-var to define the command variable.
+          For example: --extra-var "command=move"
+          Possible commands are: move and shoot.
+      when:
+        - not death
+        - command is not defined
+
+    - debug:
+        msg: |
+          To which room do you wish to move?
+          This information should be passed using the option --extra-var to
+          define the room variable.
+          For example: --extra-var "room=1"
+      when:
+        - not death
+        - command is defined
+        - command == 'move'
+        - room is not defined
