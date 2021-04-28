@@ -8,7 +8,7 @@
     pit_msg: ""
     wumpus_msg: ""
     commands: ['move', 'shoot']
-    rooms:
+    cave:
       "1":
         connect: ["2", "5", "8"]
         bats: false
@@ -112,7 +112,7 @@
   tasks:
     - name: Generate the Cave's rooms.
       include_tasks: cave-gen.yml
-      when: rooms is not defined
+      when: cave is not defined
 
     - name: Set initial number of arrows.
       set_fact:
@@ -133,7 +133,7 @@
         that:
           - command is defined
           - command == 'move'
-          - "room in rooms[position]['connect']"
+          - "room in cave[position]['connect']"
         fail_msg: "*Oof!*  (You hit the wall)"
         quiet: yes
       when: room is defined
@@ -153,21 +153,21 @@
           *flap*  *flap*  *flap*  (humongous bats pick you up and move you!)
       when:
         - position is defined
-        - rooms[position]['bats']
+        - cave[position]['bats']
 
     - name: Pick random position.
       set_fact:
         position: "{{ range(1, 20) | random }}"
         cacheable: yes
       when: position is not defined
-            or (position is defined and rooms[position]['bats'])
+            or (position is defined and cave[position]['bats'])
 
     - name: Check for imminent threats.
       set_fact:
         death: yes
       when:
         - position is defined
-        - rooms[position]['pit'] or rooms[position]['wumpus'] or arrows == 0
+        - cave[position]['pit'] or cave[position]['wumpus'] or arrows == 0
 
     - name: Game over by pits.
       debug:
@@ -180,7 +180,7 @@
           you can at least find out if Jules Verne was right...
       when:
         - death
-        - rooms[position]['pit']
+        - cave[position]['pit']
 
     - name: Game over by evil Wumpus.
       debug:
@@ -193,7 +193,7 @@
           pass out from the stench!
       when:
         - death
-        - rooms[position]['wumpus']
+        - cave[position]['wumpus']
 
     - name: Game over by lack of arrows.
       debug:
@@ -211,9 +211,9 @@
 
     - name: Get adjacent rooms.
       set_fact:
-        first: "{{ rooms[position]['connect'][0] }}"
-        second: "{{ rooms[position]['connect'][1] }}"
-        third: "{{ rooms[position]['connect'][2] }}"
+        first: "{{ cave[position]['connect'][0] }}"
+        second: "{{ cave[position]['connect'][1] }}"
+        third: "{{ cave[position]['connect'][2] }}"
       when: not death
 
     - name: Debug
@@ -224,34 +224,34 @@
       set_fact:
         pit_msg: "*whoosh* (I feel a draft from some pits)."
       when: not death
-            and (rooms[rooms[position]['connect'][0]]['pit']
-                 or rooms[rooms[position]['connect'][1]]['pit']
-                 or rooms[rooms[position]['connect'][2]]['pit'])
+            and (cave[cave[position]['connect'][0]]['pit']
+                 or cave[cave[position]['connect'][1]]['pit']
+                 or cave[cave[position]['connect'][2]]['pit'])
 
     - name: Hear bats.
       set_fact:
         bats_msg: "*rustle* *rustle* (must be bats nearby)"
       when: not death
-            and (rooms[rooms[position]['connect'][0]]['bats']
-                 or rooms[rooms[position]['connect'][1]]['bats']
-                 or rooms[rooms[position]['connect'][2]]['bats'])
+            and (cave[cave[position]['connect'][0]]['bats']
+                 or cave[cave[position]['connect'][1]]['bats']
+                 or cave[cave[position]['connect'][2]]['bats'])
 
     - name: Smell Wumpus.
       set_fact:
         wumpus_msg: "*sniff* (I can smell the evil Wumpus nearby!)"
       when: not death
-            and (rooms[rooms[position]['connect'][0]]['wumpus']
-                 or rooms[rooms[position]['connect'][1]]['wumpus']
-                 or rooms[rooms[position]['connect'][2]]['wumpus']
-                 or rooms[rooms[first|string]['connect'][0]]['wumpus']
-                 or rooms[rooms[first|string]['connect'][1]]['wumpus']
-                 or rooms[rooms[first|string]['connect'][2]]['wumpus']
-                 or rooms[rooms[second|string]['connect'][0]]['wumpus']
-                 or rooms[rooms[second|string]['connect'][1]]['wumpus']
-                 or rooms[rooms[second|string]['connect'][2]]['wumpus']
-                 or rooms[rooms[third|string]['connect'][0]]['wumpus']
-                 or rooms[rooms[third|string]['connect'][1]]['wumpus']
-                 or rooms[rooms[third|string]['connect'][2]]['wumpus'])
+            and (cave[cave[position]['connect'][0]]['wumpus']
+                 or cave[cave[position]['connect'][1]]['wumpus']
+                 or cave[cave[position]['connect'][2]]['wumpus']
+                 or cave[cave[first|string]['connect'][0]]['wumpus']
+                 or cave[cave[first|string]['connect'][1]]['wumpus']
+                 or cave[cave[first|string]['connect'][2]]['wumpus']
+                 or cave[cave[second|string]['connect'][0]]['wumpus']
+                 or cave[cave[second|string]['connect'][1]]['wumpus']
+                 or cave[cave[second|string]['connect'][2]]['wumpus']
+                 or cave[cave[third|string]['connect'][0]]['wumpus']
+                 or cave[cave[third|string]['connect'][1]]['wumpus']
+                 or cave[cave[third|string]['connect'][2]]['wumpus'])
 
     - debug:
         msg: |
@@ -259,7 +259,7 @@
           {{ pit_msg }}
           {{ bats_msg }}
           {{ wumpus_msg }}
-          There are tunnels to rooms {{ rooms[position]['connect'][0] }}, {{ rooms[position]['connect'][1] }}, and {{ rooms[position]['connect'][2] }}.
+          There are tunnels to rooms {{ cave[position]['connect'][0] }}, {{ cave[position]['connect'][1] }}, and {{ cave[position]['connect'][2] }}.
       when: not death
 
     - debug:
