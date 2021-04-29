@@ -1,5 +1,46 @@
 ---
-- name: It's the end!
+- name: The End | Game over by pits.
+  set_fact:
+    endmsg: |
+      *AAAUUUUGGGGGHHHHHhhhhhhhhhh...*
+      The whistling sound and updraft as you walked into this room of the
+      cave apparently weren't enough to clue you in to the presence of the
+      bottomless pit. You have a lot of time to reflect on this error as
+      you fall many miles to the core of the earth. Look on the bright side;
+      you can at least find out if Jules Verne was right...
+  when:
+    - death
+    - cave[position]['pit']
+
+- name: The End | Game over by evil Wumpus.
+  set_fact:
+    endmsg: |
+      *ROAR* *chomp* *snurfle* *chomp*!
+      Much to the delight of the Wumpus, you walk right into his mouth,
+      making you one of the easiest dinners he's ever had! For you, however,
+      it's a rather unpleasant death. The only good thing is that it's been
+      so long since the evil Wumpus cleaned his teeth that you immediately
+      pass out from the stench!
+  when:
+    - death
+    - cave[position]['wumpus']
+
+- name: The End | Game over by lack of arrows.
+  set_fact:
+    endmsg: |
+      You turn and look at your quiver, and realize with a sinking feeling
+      that you've just shot your last arrow (figuratively, too). Sensing this
+      with its psychic powers, the evil Wumpus rampages through the cave, finds
+      you, and with a mighty *ROAR* eats you alive!
+  when:
+    - death
+    - arrows == 0
+
+- name: The End | Removal of game data.
   file:
     path: .facts/localhost
     state: absent
+
+- name: The End | Final message.
+  fail:
+    msg: "{{ endmsg }}"
