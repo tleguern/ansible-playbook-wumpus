@@ -1,0 +1,25 @@
+---
+dependency:
+  name: galaxy
+  enabled: false
+driver:
+  name: delegated
+  options:
+    managed: false
+    ansible_connection_options:
+      ansible_connection: local
+platforms:
+  - name: instance
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      stdout_callback: yaml
+      interpreter_python: /usr/local/bin/python3
+      fact_caching: jsonfile
+      fact_caching_connection: .facts
+verifier:
+  name: ansible
+scenario:
+  converge_sequence:
+    - converge

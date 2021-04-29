@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  become: no
+  gather_facts: no
+
+- import_playbook: simple-move.yml
