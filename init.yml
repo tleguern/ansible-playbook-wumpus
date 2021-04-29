@@ -1,0 +1,10 @@
+---
+- name: Init | Generate the Cave's rooms.
+  include_tasks: "cave-{{ cave_type }}.yml"
+  when: cave is not defined
+
+- name: Init | Set initial number of arrows.
+  set_fact:
+    arrows: 5
+    cacheable: yes
+  when: arrows is not defined
