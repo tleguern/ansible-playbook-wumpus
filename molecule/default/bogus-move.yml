@@ -1,0 +1,55 @@
+---
+- name: Bogus moves.
+  hosts: all
+  become: no
+  gather_facts: no
+  vars:
+    arrows: 1
+    position: "1"
+    cave:
+      "1":
+        connect: ["2", "3"]
+        bats: false
+        pit: false
+        wumpus: false
+      "2":
+        connect: ["1", "3", "4"]
+        bats: false
+        pit: false
+        wumpus: false
+      "3":
+        connect: ["1", "2", "4"]
+        bats: false
+        pit: false
+        wumpus: false
+      "4":
+        connect: ["2", "3"]
+        bats: false
+        pit: false
+        wumpus: false
+    commands: [ 'move' ]
+  tasks:
+    - block:
+        - name: Move from room 1 to 4.
+          include_tasks: ../../execute-command.yml
+          vars:
+            command: 'move'
+            room: "4"
+        - name: The move was incorrectly recognized as valid.
+          fail:
+      rescue:
+        - name: The move was correctly recognized as an error.
+          assert:
+            that: yes
+    - block:
+        - name: Move to the current room.
+          include_tasks: ../../execute-command.yml
+          vars:
+            command: 'move'
+            room: "1"
+        - name: The move was incorrectly recognized as valid.
+          fail:
+      rescue:
+        - name: The move was correctly recognized as an error.
+          assert:
+            that: yes

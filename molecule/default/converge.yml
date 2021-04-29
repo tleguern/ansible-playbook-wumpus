@@ -5,3 +5,4 @@
   gather_facts: no
 
 - import_playbook: simple-move.yml
+- import_playbook: bogus-move.yml
