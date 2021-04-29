@@ -40,11 +40,19 @@
     - command == 'shoot'
     - rooms is defined
 
-#- name: Command | Arrows
-#  include_tasks: shoot-arrow.yml
-#  loop: "{{ rooms.split(',') }}"
-#  loop_control:
-#    loop_var: nextroom
-#  when:
-#    - command == 'shoot'
-#    - rooms is defined
+- name: Define arrow position.
+  set_fact:
+    arrow: "{{ position }}"
+  when:
+    - command == 'shoot'
+    - rooms is defined
+
+- name: Command | Arrows
+  include_tasks: shoot-arrow.yml
+  loop: "{{ rooms.split(',') }}"
+  loop_control:
+    loop_var: nextroom
+    extended: yes
+  when:
+    - command == 'shoot'
+    - rooms is defined

@@ -17,7 +17,8 @@ Here is a list of intended features for first release:
 - [X] Feeling nearby pits ;
 - [X] Hearing nearby bats ;
 - [X] Smelling nearby wumpii ;
-- [ ] Shoot arrows ;
+- [X] Shoot arrows ;
+- [ ] Hard stop for arrows at 5 rooms ;
 - [ ] Random chances that the arrow fail after 4 rooms ;
 - [ ] The Wumpus awakens and moves on shot failure ;
 

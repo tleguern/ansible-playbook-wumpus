@@ -4,6 +4,7 @@
   connection: local
   vars:
     death: no
+    hit: no
     bats_msg: ""
     pit_msg: ""
     wumpus_msg: ""
@@ -43,15 +44,15 @@
         - cave[position]['pit'] or cave[position]['wumpus'] or arrows == 0
 
     - include_tasks: the-end.yml
-      when: death
+      when: death or hit
 
     - name: Debug
       include_tasks: debug.yml
-      when: not death
+      when: not hit
 
     - name: Sensations.
       include_tasks: sensations.yml
-      when: not death
+      when: not hit
 
     - debug:
         msg: |
@@ -60,7 +61,7 @@
           {{ bats_msg }}
           {{ wumpus_msg }}
           There are tunnels to rooms {{ cave[position]['connect'][0] }}, {{ cave[position]['connect'][1] }}, and {{ cave[position]['connect'][2] }}.
-      when: not death
+      when: not hit
 
     - debug:
         msg: |
@@ -69,7 +70,7 @@
           For example: --extra-var "command=move"
           Possible commands are: move and shoot.
       when:
-        - not death
+        - not hit
         - command is not defined
 
     - debug:
@@ -79,7 +80,7 @@
           define the room variable.
           For example: --extra-var "room=1"
       when:
-        - not death
+        - not hit
         - command is defined
         - command == 'move'
         - room is not defined
@@ -95,7 +96,7 @@
           In this second example the arrow will try to fly from the current room to room number 1, then the room number 12.
           Up to four rooms can be specified.
       when:
-        - not death
+        - not hit
         - command is defined
         - command == 'shoot'
         - rooms is not defined

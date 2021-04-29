@@ -36,6 +36,19 @@
     - death
     - arrows == 0
 
+- name: The End | Game over by shooting self.
+  set_fact:
+    endmsg: |
+      Thwack!*  A sudden piercing feeling informs you that your wild arrow
+      has ricocheted back and wedged in your side, causing extreme agony. The
+      evil Wumpus, with its psychic powers, realizes this and immediately rushes
+      to your side, not to help, alas, but to EAT YOU!
+      (*CHOMP*)
+  when:
+    - death
+    - arrow is defined
+    - arrow == position
+
 - name: The End | Removal of game data.
   file:
     path: .facts/localhost
@@ -44,3 +57,15 @@
 - name: The End | Final message.
   fail:
     msg: "{{ endmsg }}"
+  when: death
+
+- name: The End | Final message.
+  debug:
+    msg: |
+      *thwock!* *groan* *crash*
+      A horrible roar fills the cave, and you realize, with a smile, that you
+      have slain the evil Wumpus and won the game! You don't want to tarry for
+      long, however, because not only is the Wumpus famous, but the stench of
+      dead Wumpus is also quite well known--a stench powerful enough to slay the
+      mightiest adventurer at a single whiff!!
+  when: hit
