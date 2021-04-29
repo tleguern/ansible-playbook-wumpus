@@ -138,6 +138,17 @@
         quiet: yes
       when: room is defined
 
+    - name: Verify input - rooms.
+      assert:
+        that:
+          - command is defined
+          - command == 'shoot'
+          - rooms != ''
+          - "rooms.split(',')|length <= 4"
+        fail_msg: "The arrow falls to the ground at your feet."
+        quiet: yes
+      when: rooms is defined
+
     - name: Move to another room.
       set_fact:
         position: "{{ room }}"
@@ -146,6 +157,25 @@
         - command is defined
         - command == 'move'
         - room is defined
+
+    - name: Consume an arrow.
+      set_fact:
+        arrows: "{{ arrows|int - 1 }}"
+        cacheable: yes
+      when:
+        - command is defined
+        - command == 'shoot'
+        - rooms is defined
+
+    - name: Arrows
+      include_tasks: shoot-arrow.yml
+      loop: "{{ rooms.split(',') }}"
+      loop_control:
+        loop_var: nextroom
+      when:
+        - command is defined
+        - command == 'shoot'
+        - rooms is defined
 
     - name: Check for bats in the room.
       debug:
@@ -283,3 +313,19 @@
         - command is defined
         - command == 'move'
         - room is not defined
+
+    - debug:
+        msg: |
+          To which room do you wish to shoot?
+          You can specify either a single room or a complete path to a target.
+          This information should be passed using the option --extra-var to
+          define the rooms variable (note the plural here).
+          Shoot in a single room: --extra-var "rooms=2"
+          Shoot in a distant room: --extra-var "rooms=1,12"
+          In this second example the arrow will try to fly from the current room to room number 1, then the room number 12.
+          Up to four rooms can be specified.
+      when:
+        - not death
+        - command is defined
+        - command == 'shoot'
+        - rooms is not defined
