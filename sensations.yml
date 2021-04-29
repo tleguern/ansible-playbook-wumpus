@@ -1,0 +1,36 @@
+---
+- name: Get adjacent rooms.
+  set_fact:
+    first: "{{ cave[position]['connect'][0] }}"
+    second: "{{ cave[position]['connect'][1] }}"
+    third: "{{ cave[position]['connect'][2] }}"
+
+- name: Sensations | Feel pits.
+  set_fact:
+    pit_msg: "*whoosh* (I feel a draft from some pits)."
+  when: (cave[cave[position]['connect'][0]]['pit']
+         or cave[cave[position]['connect'][1]]['pit']
+         or cave[cave[position]['connect'][2]]['pit'])
+
+- name: Sensations | Hear bats.
+  set_fact:
+    bats_msg: "*rustle* *rustle* (must be bats nearby)"
+  when: (cave[cave[position]['connect'][0]]['bats']
+         or cave[cave[position]['connect'][1]]['bats']
+         or cave[cave[position]['connect'][2]]['bats'])
+
+- name: Sensations | Smell Wumpus.
+  set_fact:
+    wumpus_msg: "*sniff* (I can smell the evil Wumpus nearby!)"
+  when: (cave[cave[position]['connect'][0]]['wumpus']
+         or cave[cave[position]['connect'][1]]['wumpus']
+         or cave[cave[position]['connect'][2]]['wumpus']
+         or cave[cave[first|string]['connect'][0]]['wumpus']
+         or cave[cave[first|string]['connect'][1]]['wumpus']
+         or cave[cave[first|string]['connect'][2]]['wumpus']
+         or cave[cave[second|string]['connect'][0]]['wumpus']
+         or cave[cave[second|string]['connect'][1]]['wumpus']
+         or cave[cave[second|string]['connect'][2]]['wumpus']
+         or cave[cave[third|string]['connect'][0]]['wumpus']
+         or cave[cave[third|string]['connect'][1]]['wumpus']
+         or cave[cave[third|string]['connect'][2]]['wumpus'])
