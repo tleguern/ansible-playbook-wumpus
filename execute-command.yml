@@ -1,0 +1,50 @@
+---
+- name: Command | Verify variable `command`.
+  assert:
+    that:
+      - command in commands
+    fail_msg: "Accepted commands are 'move' and 'shoot' not '{{ command }}'"
+    quiet: yes
+
+- name: Command | Verify variable `room`.
+  assert:
+    that:
+      - command == 'move'
+      - "room in cave[position]['connect']"
+    fail_msg: "*Oof!*  (You hit the wall)"
+    quiet: yes
+  when: room is defined
+
+- name: Command | Verify variable `rooms`.
+  assert:
+    that:
+      - command == 'shoot'
+      - rooms != ''
+    fail_msg: "The arrow falls to the ground at your feet."
+    quiet: yes
+  when: rooms is defined
+
+- name: Command | Move to another room.
+  set_fact:
+    position: "{{ room }}"
+    cacheable: yes
+  when:
+    - command == 'move'
+    - room is defined
+
+- name: Command | Consume an arrow.
+  set_fact:
+    arrows: "{{ arrows|int - 1 }}"
+    cacheable: yes
+  when:
+    - command == 'shoot'
+    - rooms is defined
+
+#- name: Command | Arrows
+#  include_tasks: shoot-arrow.yml
+#  loop: "{{ rooms.split(',') }}"
+#  loop_control:
+#    loop_var: nextroom
+#  when:
+#    - command == 'shoot'
+#    - rooms is defined

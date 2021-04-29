@@ -14,63 +14,11 @@
       include_tasks: init.yml
       when: cave is not defined or arrows is not defined
 
-
-    - name: Verify input - command.
-      assert:
-        that:
-          - command in commands
-        fail_msg: "Accepted commands are 'move' and 'shoot' not '{{ command }}'"
-        quiet: yes
-      when: command is defined
-
-    - name: Verify input - room.
-      assert:
-        that:
-          - command is defined
-          - command == 'move'
-          - "room in cave[position]['connect']"
-        fail_msg: "*Oof!*  (You hit the wall)"
-        quiet: yes
-      when: room is defined
-
-    - name: Verify input - rooms.
-      assert:
-        that:
-          - command is defined
-          - command == 'shoot'
-          - rooms != ''
-          - "rooms.split(',')|length <= 4"
-        fail_msg: "The arrow falls to the ground at your feet."
-        quiet: yes
-      when: rooms is defined
-
-    - name: Move to another room.
-      set_fact:
-        position: "{{ room }}"
-        cacheable: yes
+    - name: Verify input.
+      include_tasks: execute-command.yml
       when:
+        - position is defined
         - command is defined
-        - command == 'move'
-        - room is defined
-
-    - name: Consume an arrow.
-      set_fact:
-        arrows: "{{ arrows|int - 1 }}"
-        cacheable: yes
-      when:
-        - command is defined
-        - command == 'shoot'
-        - rooms is defined
-
-    - name: Arrows
-      include_tasks: shoot-arrow.yml
-      loop: "{{ rooms.split(',') }}"
-      loop_control:
-        loop_var: nextroom
-      when:
-        - command is defined
-        - command == 'shoot'
-        - rooms is defined
 
     - name: Check for bats in the room.
       debug:
