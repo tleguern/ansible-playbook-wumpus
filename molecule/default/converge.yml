@@ -6,3 +6,4 @@
 
 - import_playbook: simple-move.yml
 - import_playbook: bogus-move.yml
+- import_playbook: sensations.yml
