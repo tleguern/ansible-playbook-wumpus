@@ -1,0 +1,39 @@
+---
+- name: Simple shoot - one room.
+  hosts: all
+  become: no
+  gather_facts: no
+  vars:
+    death: no
+    hit: no
+    cave:
+      "1":
+        connect: ["2"]
+        bats: false
+        pit: false
+        wumpus: false
+      "2":
+        connect: ["1"]
+        bats: false
+        pit: false
+        wumpus: false
+    commands: [ 'shoot' ]
+  tasks:
+    - name: Teleport to room 1.
+      set_fact:
+        position: "1"
+
+    - name: Create one arrow in the quiver.
+      set_fact:
+        arrows: "1"
+
+    - name: Shoot from room 1 to 2.
+      include_tasks: ../../execute-command.yml
+      vars:
+        command: 'shoot'
+        rooms: "2"
+
+    - assert:
+        that:
+          - arrow == "2"
+          - arrows == "0"

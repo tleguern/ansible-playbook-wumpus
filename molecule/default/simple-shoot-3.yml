@@ -1,0 +1,49 @@
+---
+- name: Simple shoot - three rooms.
+  hosts: all
+  become: no
+  gather_facts: no
+  vars:
+    death: no
+    hit: no
+    cave:
+      "1":
+        connect: ["2"]
+        bats: false
+        pit: false
+        wumpus: false
+      "2":
+        connect: ["1", "3"]
+        bats: false
+        pit: false
+        wumpus: false
+      "3":
+        connect: ["2", "4"]
+        bats: false
+        pit: false
+        wumpus: false
+      "4":
+        connect: ["3"]
+        bats: false
+        pit: false
+        wumpus: false
+    commands: [ 'shoot' ]
+  tasks:
+    - name: Teleport to room 1.
+      set_fact:
+        position: "1"
+
+    - name: Create one arrow in the quiver.
+      set_fact:
+        arrows: "1"
+
+    - name: Shoot from room 1 to 4.
+      include_tasks: ../../execute-command.yml
+      vars:
+        command: 'shoot'
+        rooms: "2,3,4"
+
+    - assert:
+        that:
+          - arrow == "4"
+          - arrows == "0"

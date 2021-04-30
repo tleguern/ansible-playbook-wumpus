@@ -1,0 +1,46 @@
+---
+- name: Bogus shoot.
+  hosts: all
+  become: no
+  gather_facts: no
+  vars:
+    arrows: 1
+    position: "1"
+    cave:
+      "1":
+        connect: ["2"]
+        bats: false
+        pit: false
+        wumpus: false
+      "2":
+        connect: ["1"]
+        bats: false
+        pit: false
+        wumpus: false
+    commands: [ 'shoot' ]
+  tasks:
+    - block:
+        - name: Fail to target a room.
+          include_tasks: ../../execute-command.yml
+          vars:
+            command: 'shoot'
+            rooms: ""
+        - name: The move was incorrectly recognized as valid.
+          fail:
+      rescue:
+        - name: The move was correctly recognized as an error.
+          assert:
+            that: yes
+    # TODO: Not detected yet. 
+    #- block:
+    #    - name: Target something that is not a room.
+    #      include_tasks: ../../execute-command.yml
+    #      vars:
+    #        command: 'shoot'
+    #        rooms: "wumpus"
+    #    - name: The move was incorrectly recognized as valid.
+    #      fail:
+    #  rescue:
+    #    - name: The move was correctly recognized as an error.
+    #      assert:
+    #        that: yes
