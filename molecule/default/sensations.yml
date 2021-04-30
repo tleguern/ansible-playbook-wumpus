@@ -5,7 +5,6 @@
   gather_facts: no
   vars:
     arrows: 1
-    position: "17"
     cave:
       "1":
         connect: ["2", "5", "8"]
@@ -112,6 +111,10 @@
     pit_msg: ""
     wumpus_msg: ""
   tasks:
+    - name: Teleport to room 2.
+      set_fact:
+        position: "2"
+
     - name: Feel around.
       include_tasks: ../../sensations.yml
 
