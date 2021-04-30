@@ -1,0 +1,58 @@
+---
+- name: Giant bats.
+  block:
+    - name: Check for bats in the room.
+      debug:
+        msg: |
+          *flap*  *flap*  *flap*  (humongous bats pick you up and move you!)
+
+    - name: Pick random position.
+      set_fact:
+        position: "{{ range(1, 20) | random }}"
+  when: cave[position]['bats']
+
+- name: Check for imminent threats.
+  set_fact:
+    death: yes
+  when: cave[position]['pit'] or cave[position]['wumpus'] or arrows == 0
+
+- include_tasks: the-end.yml
+  when: death or hit
+
+- name: Debug
+  include_tasks: debug.yml
+  when: not hit
+
+- name: Sensations.
+  include_tasks: sensations.yml
+  when: not hit
+
+- debug:
+    msg: |
+      You are in room {{ position }} of the cave, and have {{ arrows }} arrows left.
+      {{ pit_msg }}
+      {{ bats_msg }}
+      {{ wumpus_msg }}
+      There are tunnels to rooms {{ cave[position]['connect'][0] }}, {{ cave[position]['connect'][1] }}, and {{ cave[position]['connect'][2] }}.
+  when: not hit
+
+- name: Ask.
+  pause:
+    prompt: "Move or shoot?"
+  register: choice
+
+- name: Parse choice.
+  set_fact:
+    command: "{{ choice.user_input }}"
+
+- include_tasks: "{{ command }}.yml"
+  when: "command in commands"
+
+- include_tasks: "help.yml"
+  when: "command not in commands"
+
+- include_tasks: the-end.yml
+  when: death or hit or arrows == 0
+
+- include_tasks: wumpus-tasks.yml
+  when: not hit

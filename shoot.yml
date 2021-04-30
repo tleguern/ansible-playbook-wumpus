@@ -1,0 +1,31 @@
+---
+- name: Shoot | Ask.
+  pause:
+    prompt: "Enter a list of rooms to shoot into: (space separated)"
+  register: choice
+
+- name: Shoot | Verify choice.
+  debug:
+    msg: "The arrow falls to the ground at your feet."
+  when: "choice.user_input == ''"
+
+- name: Shoot | Parse choice.
+  set_fact:
+    rooms: "{{ choice.user_input.split(' ') }}"
+
+- name: Shoot | Consume an arrow.
+  set_fact:
+    arrows: "{{ arrows|int - 1 }}"
+
+- name: Shoot | Define arrow position.
+  set_fact:
+    arrow: "{{ position }}"
+
+- name: Shoot | Define necessary variables.
+  set_fact:
+    roomcnt: "0"
+    toofar: no
+    failedhit: no
+
+- name: Shoot | Arrows
+  include_tasks: arrow.yml

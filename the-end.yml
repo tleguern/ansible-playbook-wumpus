@@ -49,11 +49,6 @@
     - arrow is defined
     - arrow == position
 
-- name: The End | Removal of game data.
-  file:
-    path: .facts/localhost
-    state: absent
-
 - name: The End | Final message.
   fail:
     msg: "{{ endmsg }}"

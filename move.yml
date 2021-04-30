@@ -1,0 +1,24 @@
+---
+- name: Move | Ask.
+  pause:
+    prompt: "To which room do you wish to move?"
+  register: choice
+
+- name: Move | Parse choice.
+  set_fact:
+    room: "{{ choice.user_input }}"
+
+- name: Move | Verify choice.
+  debug:
+    msg: "*Oof!*  (You hit the wall)"
+  when: "room not in cave[position]['connect']"
+
+- name: Move | Move to another room.
+  set_fact:
+    position: "{{ room }}"
+  when: "room in cave[position]['connect']"
+
+- name: Move | Oh what a fool.
+  set_fact:
+    death: yes
+  when: cave[position]['pit'] or cave[position]['wumpus']

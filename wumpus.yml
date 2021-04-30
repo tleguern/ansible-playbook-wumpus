@@ -1,14 +1,9 @@
 ---
 - hosts: localhost
   gather_facts: no
-  connection: local
   vars:
     death: no
     hit: no
-    failarrow: no
-    bats_msg: ""
-    pit_msg: ""
-    wumpus_msg: ""
     commands: ['move', 'shoot']
     cave_type: 'dodecahedron'
   tasks:
@@ -16,88 +11,8 @@
       include_tasks: init.yml
       when: cave is not defined or arrows is not defined
 
-    - name: Verify input.
-      include_tasks: execute-command.yml
-      when:
-        - position is defined
-        - command is defined
-
-    - name: Check for bats in the room.
-      debug:
-        msg: |
-          *flap*  *flap*  *flap*  (humongous bats pick you up and move you!)
-      when:
-        - position is defined
-        - cave[position]['bats']
-
-    - name: Pick random position.
+    - name: Pick random starting position.
       set_fact:
         position: "{{ range(1, 20) | random }}"
-        cacheable: yes
-      when: position is not defined
-            or (position is defined and cave[position]['bats'])
 
-    - name: Check for imminent threats.
-      set_fact:
-        death: yes
-      when:
-        - position is defined
-        - cave[position]['pit'] or cave[position]['wumpus'] or arrows == 0
-
-    - include_tasks: the-end.yml
-      when: death or hit
-
-    - name: Debug
-      include_tasks: debug.yml
-      when: not hit
-
-    - name: Sensations.
-      include_tasks: sensations.yml
-      when: not hit
-
-    - debug:
-        msg: |
-          You are in room {{ position }} of the cave, and have {{ arrows }} arrows left.
-          {{ pit_msg }}
-          {{ bats_msg }}
-          {{ wumpus_msg }}
-          There are tunnels to rooms {{ cave[position]['connect'][0] }}, {{ cave[position]['connect'][1] }}, and {{ cave[position]['connect'][2] }}.
-      when: not hit
-
-    - debug:
-        msg: |
-          To play the game you have to run the playbook successively using the
-          option --extra-var to define the command variable.
-          For example: --extra-var "command=move"
-          Possible commands are: move and shoot.
-      when:
-        - not hit
-        - command is not defined
-
-    - debug:
-        msg: |
-          To which room do you wish to move?
-          This information should be passed using the option --extra-var to
-          define the room variable.
-          For example: --extra-var "room=1"
-      when:
-        - not hit
-        - command is defined
-        - command == 'move'
-        - room is not defined
-
-    - debug:
-        msg: |
-          To which room do you wish to shoot?
-          You can specify either a single room or a complete path to a target.
-          This information should be passed using the option --extra-var to
-          define the rooms variable (note the plural here).
-          Shoot in a single room: --extra-var "rooms=2"
-          Shoot in a distant room: --extra-var "rooms=1,12"
-          In this second example the arrow will try to fly from the current room to room number 1, then the room number 12.
-          Up to four rooms can be specified.
-      when:
-        - not hit
-        - command is defined
-        - command == 'shoot'
-        - rooms is not defined
+    - include_tasks: wumpus-tasks.yml

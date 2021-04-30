@@ -1,0 +1,4 @@
+---
+- debug:
+    msg: "I don't understand!"
+  when: "command not in commands"
