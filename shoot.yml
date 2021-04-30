@@ -1,17 +1,20 @@
 ---
-- name: Shoot | Ask.
-  pause:
-    prompt: "Enter a list of rooms to shoot into: (space separated)"
-  register: choice
+- name: Automated tests.
+  when: not testing
+  block:
+    - name: Shoot | Ask.
+      pause:
+        prompt: "Enter a list of rooms to shoot into: (space separated)"
+      register: choice
 
-- name: Shoot | Verify choice.
-  debug:
-    msg: "The arrow falls to the ground at your feet."
-  when: "choice.user_input == ''"
+    - name: Shoot | Verify choice.
+      debug:
+        msg: "The arrow falls to the ground at your feet."
+      when: "choice.user_input == ''"
 
-- name: Shoot | Parse choice.
-  set_fact:
-    rooms: "{{ choice.user_input.split(' ') }}"
+    - name: Shoot | Parse choice.
+      set_fact:
+        rooms: "{{ choice.user_input.split(' ') }}"
 
 - name: Shoot | Consume an arrow.
   set_fact:

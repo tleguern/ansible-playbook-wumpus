@@ -1,12 +1,15 @@
 ---
-- name: Move | Ask.
-  pause:
-    prompt: "To which room do you wish to move?"
-  register: choice
+- name: Automated tests.
+  when: not testing
+  block:
+    - name: Move | Ask.
+      pause:
+        prompt: "To which room do you wish to move?"
+      register: choice
 
-- name: Move | Parse choice.
-  set_fact:
-    room: "{{ choice.user_input }}"
+    - name: Move | Parse choice.
+      set_fact:
+        room: "{{ choice.user_input }}"
 
 - name: Move | Verify choice.
   debug:
