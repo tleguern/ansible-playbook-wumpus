@@ -106,10 +106,6 @@
         bats: false
         pit: false
         wumpus: false
-    commands: [ 'move' ]
-    bats_msg: ""
-    pit_msg: ""
-    wumpus_msg: ""
   tasks:
     - name: Teleport to room 2.
       set_fact:
@@ -171,3 +167,15 @@
       assert:
         that:
           - wumpus_msg != ""
+
+    - name: Get back to room 5.
+      set_fact:
+        position: "5"
+
+    - name: Feel around.
+      include_tasks: ../../sensations.yml
+
+    - name: No stench again.
+      assert:
+        that:
+          - wumpus_msg == ""

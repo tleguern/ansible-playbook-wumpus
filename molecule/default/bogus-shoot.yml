@@ -4,33 +4,36 @@
   become: no
   gather_facts: no
   vars:
-    arrows: 1
-    position: "1"
+    death: no
+    hit: no
+    testing: yes
     cave:
       "1":
         connect: ["2"]
-        bats: false
-        pit: false
         wumpus: false
       "2":
         connect: ["1"]
-        bats: false
-        pit: false
         wumpus: false
-    commands: [ 'shoot' ]
   tasks:
-    - block:
-        - name: Fail to target a room.
-          include_tasks: ../../execute-command.yml
-          vars:
-            command: 'shoot'
-            rooms: ""
-        - name: The move was incorrectly recognized as valid.
-          fail:
-      rescue:
-        - name: The move was correctly recognized as an error.
-          assert:
-            that: yes
+    - name: Teleport to room 1.
+      set_fact:
+        position: "1"
+
+    - name: Create one arrow in the quiver.
+      set_fact:
+        arrows: "1"
+
+    - name: Fail to target a room.
+      include_tasks: ../../shoot.yml
+      vars:
+        rooms: [""]
+
+    - assert:
+        that:
+          - arrows == "1"
+          - not death
+          - not hit
+
     # TODO: Not detected yet. 
     #- block:
     #    - name: Target something that is not a room.

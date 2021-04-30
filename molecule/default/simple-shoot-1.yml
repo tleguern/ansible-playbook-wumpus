@@ -6,18 +6,14 @@
   vars:
     death: no
     hit: no
+    testing: yes
     cave:
       "1":
         connect: ["2"]
-        bats: false
-        pit: false
         wumpus: false
       "2":
         connect: ["1"]
-        bats: false
-        pit: false
         wumpus: false
-    commands: [ 'shoot' ]
   tasks:
     - name: Teleport to room 1.
       set_fact:
@@ -28,12 +24,13 @@
         arrows: "1"
 
     - name: Shoot from room 1 to 2.
-      include_tasks: ../../execute-command.yml
+      include_tasks: ../../shoot.yml
       vars:
-        command: 'shoot'
         rooms: "2"
 
     - assert:
         that:
           - arrow == "2"
           - arrows == "0"
+          - not death
+          - not hit
