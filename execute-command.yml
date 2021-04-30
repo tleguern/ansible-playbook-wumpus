@@ -52,6 +52,7 @@
   loop: "{{ rooms.split(',') }}"
   loop_control:
     loop_var: nextroom
+    index_var: roomcnt
     extended: yes
   when:
     - command == 'shoot'

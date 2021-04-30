@@ -10,4 +10,6 @@
 - import_playbook: simple-shoot-1.yml
 - import_playbook: simple-shoot-2.yml
 - import_playbook: simple-shoot-3.yml
+- import_playbook: simple-shoot-4.yml
+- import_playbook: simple-shoot-5.yml
 - import_playbook: bogus-shoot.yml

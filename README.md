@@ -18,8 +18,8 @@ Here is a list of intended features for first release:
 - [X] Hearing nearby bats ;
 - [X] Smelling nearby wumpii ;
 - [X] Shoot arrows ;
-- [ ] Hard stop for arrows at 5 rooms ;
-- [ ] Random chances that the arrow fail after 4 rooms ;
+- [X] Hard stop for arrows at 4 rooms ;
+- [ ] Random chances that the arrow fail after 3 rooms ;
 - [ ] The Wumpus awakens and moves on shot failure ;
 
 Features not fit for the first release:

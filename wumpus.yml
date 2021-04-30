@@ -5,6 +5,7 @@
   vars:
     death: no
     hit: no
+    failarrow: no
     bats_msg: ""
     pit_msg: ""
     wumpus_msg: ""

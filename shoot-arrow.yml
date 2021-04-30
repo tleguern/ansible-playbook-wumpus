@@ -7,6 +7,17 @@
       Target is room: {{ nextroom }}.
     verbosity: 1
 
+- name: Arrow | Is the arrow not too far?
+  set_fact:
+    failarrow: yes
+  when: roomcnt == 4
+
+- name: Arrow | Gready shot.
+  debug:
+    msg: |
+      The arrow wavers in its flight and can go no further than room {{ arrow }}
+  when: failarrow
+
 - name: Arrow | Can the arrow fly to the next room?
   assert:
     that:
@@ -16,9 +27,14 @@
     quiet: yes
   failed_when: no
   register: canitfly
+  when: not failarrow
 
 - name: Arrow | Yes.
-  when: canitfly.msg|bool
+  when:
+    - canitfly is defined
+    - canitfly.msg is defined
+    - canitfly.msg|bool
+    - not failarrow
   block:
     - name: Yes | Define arrow position.
       set_fact:
@@ -29,7 +45,11 @@
         verbosity: 1
 
 - name: Arrow | No.
-  when: not canitfly.msg|bool
+  when:
+    - canitfly is defined
+    - canitfly.msg is defined
+    - not canitfly.msg|bool
+    - not failarrow
   block:
     - name: No | Pick a random room to fly to.
       set_fact:
@@ -46,9 +66,13 @@
 - name: Arrow | Does the arrow hit the Wumpus?
   set_fact:
     hit: true
-  when: cave[arrow]['wumpus']
+  when:
+    - not failarrow
+    - cave[arrow]['wumpus']
 
-- block:
+- name: Arrow | Player is so bad.
+  when: not failarrow
+  block:
     - name: Arrow | Does the arrow hit the Player?
       set_fact:
         death: yes
@@ -60,6 +84,7 @@
   debug:
     msg: "The arrow hit nothing."
   when:
+    - not failarrow
     - ansible_loop.last
     - hit is defined
     - not hit
