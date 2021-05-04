@@ -37,6 +37,28 @@ Features not fit for the first release:
 - The starting position is not validated before starting so there is 1/10 chances to start in a pit and 1/20 to start on the evil Wumpus ;
 - Add the aenerobu 
 
+## How to play
+
+Simply run the following command:
+
+```yaml
+$ ansible-playbook wumpus.yml
+...
+TASK [debug] *******************************************************************
+ok: [localhost] => 
+  msg: |-
+    You are in room 14 of the cave, and have 5 arrows left.
+    *whoosh* (I feel a draft from some pits).
+    *sniff* (I can smell the evil Wumpus nearby!)
+    There are tunnels to rooms 4, 13, and 15.
+
+TASK [Ask.] ********************************************************************
+[Ask.]
+Move or shoot?:
+```
+
+The game asks if you prefer to `move` to an adjacent room (be careful about bottomless pits, giant bats or the occasional Wumpus) or `shoot` a crooked arrow to a series of rooms.
+
 ## License
 
 ISC
