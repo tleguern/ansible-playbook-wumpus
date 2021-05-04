@@ -6,9 +6,9 @@ The work is still in progress.
 Here is a list of intended features for first release:
 
 - [ ] Generate a random dodecahedron ;
-- [ ] Generate a random position for the bats ;
-- [ ] Generate a random position for the pits ;
-- [ ] Generate a random position for the Wumpus ;
+- [X] Generate a random position for the bats ;
+- [X] Generate a random position for the pits ;
+- [X] Generate a random position for the Wumpus ;
 - [X] Move around the map ;
 - [X] Bats transport the player ;
 - [X] Death by falling in a pit ;

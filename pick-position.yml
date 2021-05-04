@@ -1,0 +1,10 @@
+---
+- set_fact:
+    pick: "{{ range(1, 20) | random }}"
+
+- debug:
+    msg: "Generating a {{ what }} in room {{ pick }}"
+  when: debug|bool
+
+- set_fact:
+    cave: "{{ cave | combine({ pick|string: {what|string: true} }, recursive=True) }}"

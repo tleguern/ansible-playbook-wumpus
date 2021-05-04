@@ -1,7 +1,6 @@
 ---
 - name: Dodecahedron | Create a static cave.
   set_fact:
-    cacheable: true
     cave:
       "1":
         connect: ["2", "5", "8"]
@@ -41,7 +40,7 @@
       "8":
         connect: ["1", "7", "9"]
         bats: false
-        pit: true
+        pit: false
         wumpus: false
       "9":
         connect: ["8", "10", "18"]
@@ -55,7 +54,7 @@
         wumpus: false
       "11":
         connect: ["10", "12", "19"]
-        bats: true
+        bats: false
         pit: false
         wumpus: false
       "12":
@@ -67,7 +66,7 @@
         connect: ["12", "14", "20"]
         bats: false
         pit: false
-        wumpus: true
+        wumpus: false
       "14":
         connect: ["4", "13", "15"]
         bats: false
@@ -76,7 +75,7 @@
       "15":
         connect: ["6", "14", "16"]
         bats: false
-        pit: true
+        pit: false
         wumpus: false
       "16":
         connect: ["15", "17", "20"]
@@ -85,7 +84,7 @@
         wumpus: false
       "17":
         connect: ["7", "16", "18"]
-        bats: true
+        bats: false
         pit: false
         wumpus: false
       "18":
