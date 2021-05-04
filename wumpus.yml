@@ -5,6 +5,7 @@
     death: no
     hit: no
     testing: no
+    debug: no
     commands: ['move', 'shoot']
     cave_type: 'dodecahedron'
   tasks:

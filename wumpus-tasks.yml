@@ -21,7 +21,9 @@
 
 - name: Debug
   include_tasks: debug.yml
-  when: not hit
+  when:
+    - not hit
+    - debug|bool
 
 - name: Sensations.
   include_tasks: sensations.yml
