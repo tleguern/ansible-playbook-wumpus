@@ -4,7 +4,7 @@
   when: cave is not defined
 
 - name: Randomly pick hasards starting position.
-  include_tasks: pick-position.yml
+  include_tasks: hazard-position.yml
   loop:
     - wumpus
     - bats
