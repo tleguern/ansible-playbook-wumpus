@@ -13,3 +13,4 @@
 - import_playbook: simple-shoot-4.yml
 - import_playbook: simple-shoot-5.yml
 - import_playbook: bogus-shoot.yml
+- import_playbook: deaths.yml

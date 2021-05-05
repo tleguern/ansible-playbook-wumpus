@@ -1,0 +1,76 @@
+---
+- name: Deaths
+  hosts: all
+  become: no
+  gather_facts: no
+  vars:
+    death: no
+    hit: no
+    testing: yes
+    cave:
+      "1":
+        connect: ["2", "3"]
+        pit: no
+        wumpus: no
+      "2":
+        connect: ["1", "3"]
+        pit: yes
+        wumpus: no
+      "3":
+        connect: ["1", "2"]
+        pit: no
+        wumpus: yes
+  tasks:
+    - name: Teleport to room 1.
+      set_fact:
+        position: "1"
+
+    - name: Move from room 1 to 2.
+      include_tasks: ../../move.yml
+      vars:
+        room: "2"
+
+    - name: Should die by falling into a bottomless pit.
+      assert:
+        that:
+          - death
+
+    - name: Resuscitate.
+      set_fact:
+        death: no
+
+    - name: Teleport back to room 1.
+      set_fact:
+        position: "1"
+
+    - name: Move from room 1 to 3.
+      include_tasks: ../../move.yml
+      vars:
+        room: "3"
+
+    - name: Should die by being eaten by an evil Wumpus.
+      assert:
+        that:
+          - death
+
+    - name: Resuscitate.
+      set_fact:
+        death: no
+
+    - name: Teleport back to room 1.
+      set_fact:
+        position: "1"
+
+    - name: Create one arrow in the quiver.
+      set_fact:
+        arrows: "1"
+
+    - name: Shoot from room 1 to 2 and back to 1.
+      include_tasks: ../../shoot.yml
+      vars:
+        rooms: ['2', '1']
+
+    - name: Should die by shooting self with a crooked arrow.
+      assert:
+        that:
+          - death
