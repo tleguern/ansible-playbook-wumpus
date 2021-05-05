@@ -1,0 +1,21 @@
+---
+image: openbsd/6.8
+packages:
+  - python-3.8.6p0
+  - py3-pip
+  - py3-pymysql
+  - py3-wheel
+  - py3-yamllint
+  - ansible
+sources:
+  - https://git.sr.ht/~tleguern/ansible-playbook-wumpus
+environment:
+  PATH: "/bin:/usr/bin/:/usr/local/bin:/home/build/.local/bin"
+tasks:
+  - init: |
+      doas ln -sf /usr/local/bin/pip3.8 /usr/local/bin/pip
+  - pip: |
+      pip install -q molecule==3.2.4
+  - molecule: |
+      cd ansible-playbook-wumpus
+      molecule converge

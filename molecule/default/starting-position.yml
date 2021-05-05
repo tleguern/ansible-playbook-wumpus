@@ -33,12 +33,12 @@
         bats: no
         pit: no
         wumpus: no
-    # Here is an ASCII representation of the cave:
-    #       [1|W]
-    #     /       \
-    # [2|P]       [3|P]
-    #     \       /
-    #   [4|B]---[5| ]
+        # Here is an ASCII representation of the cave:
+        #       [1|W]
+        #     /       \
+        # [2|P]       [3|P]
+        #     \       /
+        #   [4|B]---[5| ]
   tasks:
     - name: Select a good starting position.
       include_tasks: ../../player-position.yml
