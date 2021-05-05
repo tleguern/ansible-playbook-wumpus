@@ -1,6 +1,6 @@
 ---
 - set_fact:
-    pick: "{{ range(1, 20) | random }}"
+    pick: "{{ (maxrooms|int + 1) | random(start=1) }}"
 
 - debug:
     msg: "Generating a {{ what }} in room {{ pick }}"

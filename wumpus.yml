@@ -6,15 +6,11 @@
     hit: no
     testing: no
     debug: no
+    maxrooms: 20
     commands: ['move', 'shoot']
     cave_type: 'dodecahedron'
   tasks:
     - name: Initialize the game.
       include_tasks: init.yml
-      when: cave is not defined or arrows is not defined
-
-    - name: Pick random starting position.
-      set_fact:
-        position: "{{ range(1, 20) | random }}"
 
     - include_tasks: wumpus-tasks.yml

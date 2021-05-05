@@ -1,0 +1,48 @@
+---
+- name: Simple moves.
+  hosts: all
+  become: no
+  gather_facts: no
+  vars:
+    testing: yes
+    _continue: yes
+    maxrooms: 5
+    cave:
+      "1":
+        connect: ["2", "3"]
+        bats: no
+        pit: no
+        wumpus: yes
+      "2":
+        connect: ["1", "4"]
+        bats: no
+        pit: yes
+        wumpus: no
+      "3":
+        connect: ["1", "5"]
+        bats: no
+        pit: yes
+        wumpus: no
+      "4":
+        connect: ["2", "5"]
+        bats: yes
+        pit: no
+        wumpus: no
+      "5":
+        connect: ["3", "4"]
+        bats: no
+        pit: no
+        wumpus: no
+    # Here is an ASCII representation of the cave:
+    #       [1|W]
+    #     /       \
+    # [2|P]       [3|P]
+    #     \       /
+    #   [4|B]---[5| ]
+  tasks:
+    - name: Select a good starting position.
+      include_tasks: ../../player-position.yml
+
+    - assert:
+        that:
+          - position == "5"

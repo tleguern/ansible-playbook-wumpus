@@ -18,3 +18,10 @@
   set_fact:
     arrows: 5
   when: arrows is not defined
+
+- name: Init | Define position loop variable.
+  set_fact:
+    _continue: yes
+
+- name: Init | Select a good starting position.
+  include_tasks: player-position.yml

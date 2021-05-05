@@ -1,0 +1,15 @@
+---
+- name: Player position | Get random room.
+  set_fact:
+    position: "{{ (maxrooms|int + 1) | random(start=1) }}"
+
+- name: Player position | Reject rooms containing hazard.
+  set_fact:
+    _continue: no
+  when:
+    - not cave[position].bats
+    - not cave[position].pit
+    - not cave[position].wumpus
+
+- include_tasks: player-position.yml
+  when: _continue
