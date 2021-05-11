@@ -32,10 +32,16 @@
 - debug:
     msg: |
       You are in room {{ position }} of the cave, and have {{ arrows }} arrows left.
+      {% if pit_msg != "" %}
       {{ pit_msg }}
+      {% endif %}
+      {% if bats_msg != "" %}
       {{ bats_msg }}
+      {% endif %}
+      {% if wumpus_msg != "" %}
       {{ wumpus_msg }}
-      There are tunnels to rooms {{ cave[position]['connect'][0] }}, {{ cave[position]['connect'][1] }}, and {{ cave[position]['connect'][2] }}.
+      {% endif %}
+      There are tunnels to rooms {% for connection in cave[position]['connect'] %}{{ connection }}{% if not loop.last %}, {% endif %}{% endfor %}.
   when: not hit
 
 - name: Ask.
