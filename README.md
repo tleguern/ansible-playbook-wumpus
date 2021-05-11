@@ -39,23 +39,15 @@ Features not fit for the first release:
 
 Simply run the following command:
 
-```yaml
+```sh
 $ ansible-playbook wumpus.yml
-...
-TASK [debug] *******************************************************************
-ok: [localhost] => 
-  msg: |-
-    You are in room 14 of the cave, and have 5 arrows left.
-    *whoosh* (I feel a draft from some pits).
-    *sniff* (I can smell the evil Wumpus nearby!)
-    There are tunnels to rooms 4, 13, and 15.
-
-TASK [Ask.] ********************************************************************
-[Ask.]
-Move or shoot?:
 ```
 
-The game asks if you prefer to `move` to an adjacent room (be careful about bottomless pits, giant bats or the occasional Wumpus) or `shoot` a crooked arrow to a series of rooms.
+There are two possible actions: `move` to an adjacent room (be careful about bottomless pits, giant bats or the occasional Wumpus) or `shoot` a crooked arrow to a series of rooms.
+
+Here is an asciicast recording of losing session:
+
+[![asciicast](https://asciinema.org/a/Glv8slBLl0DzKC3xLanwKfdag.svg)](https://asciinema.org/a/Glv8slBLl0DzKC3xLanwKfdag)
 
 ## License
 
@@ -63,7 +55,7 @@ ISC
 
 ## Contributing
 
-[Send patches on SourceHut](https://lists.sr.ht/~tleguern/misc).
+Either send [send GitHub pull requests](https://github.com/tleguern/ansible-playbook-wumpus) or [send patches on SourceHut](https://lists.sr.ht/~tleguern/misc).
 
 ## Author Information
 
