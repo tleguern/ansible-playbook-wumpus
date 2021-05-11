@@ -1,0 +1,92 @@
+---
+# Smaller cave than the dodecahedron: only five rooms but four tunnels
+
+- name: Define maxrooms.
+  set_fact:
+    maxrooms: 5
+
+- name: Initialize cave.
+  set_fact:
+    cave:
+      "1":
+        connect: []
+        bats: false
+        pit: false
+        wumpus: false
+      "2":
+        connect: []
+        bats: false
+        pit: false
+        wumpus: false
+      "3":
+        connect: []
+        bats: false
+        pit: false
+        wumpus: false
+      "4":
+        connect: []
+        bats: false
+        pit: false
+        wumpus: false
+      "5":
+        connect: []
+        bats: false
+        pit: false
+        wumpus: false
+
+- name: Define initial pool of room numbers.
+  set_fact:
+    numbers: "{{ range(1, maxrooms|int + 1) | list }}"
+
+- name: First ring
+  block:
+    - name: Select a first random number from the pool.
+      set_fact:
+        A1: "{{ numbers | random }}"
+
+    - name: Remove that number from the pool.
+      set_fact:
+        numbers: "{{ numbers | reject('eq', A1|int) | list }}"
+
+    - name: Select a second random number from the pool.
+      set_fact:
+        A2: "{{ numbers | random }}"
+
+    - name: Remove that number from the pool.
+      set_fact:
+        numbers: "{{ numbers | reject('eq', A2|int) | list }}"
+
+    - name: Select a third random number from the pool.
+      set_fact:
+        A3: "{{ numbers | random }}"
+
+    - name: Remove that number from the pool.
+      set_fact:
+        numbers: "{{ numbers | reject('eq', A3|int) | list }}"
+
+    - name: Select a fourth random number from the pool.
+      set_fact:
+        A4: "{{ numbers | random }}"
+
+    - name: Remove that number from the pool.
+      set_fact:
+        numbers: "{{ numbers | reject('eq', A4|int) | list }}"
+
+    - name: Select a fith random number from the pool.
+      set_fact:
+        A5: "{{ numbers | random }}"
+
+    - name: Remove that number from the pool.
+      set_fact:
+        numbers: "{{ numbers | reject('eq', A5|int) | list }}"
+
+- set_fact:
+    cave: "{{ cave | combine({ A1|string: { 'connect': [A2, A3, A4, A5] } }, recursive=True) }}"
+- set_fact:
+    cave: "{{ cave | combine({ A2|string: { 'connect': [A3, A4, A5, A1] } }, recursive=True) }}"
+- set_fact:                                
+    cave: "{{ cave | combine({ A3|string: { 'connect': [A4, A5, A1, A2] } }, recursive=True) }}"
+- set_fact:                                
+    cave: "{{ cave | combine({ A4|string: { 'connect': [A5, A1, A2, A3] } }, recursive=True) }}"
+- set_fact:                                
+    cave: "{{ cave | combine({ A5|string: { 'connect': [A1, A2, A3, A4] } }, recursive=True) }}"
