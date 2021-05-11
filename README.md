@@ -5,7 +5,7 @@ The work is still in progress.
 
 Here is a list of intended features for first release:
 
-- [ ] Generate a random dodecahedron ;
+- [X] Generate a random dodecahedron ;
 - [X] Generate a random position for the bats ;
 - [X] Generate a random position for the pits ;
 - [X] Generate a random position for the Wumpus ;
@@ -33,10 +33,7 @@ Features not fit for the first release:
 
 ## Caveats
 
-- The cave is not randomly generated yet ;
-- Debug information comprising a full map of the cave are shown each turn ;
-- The starting position is not validated before starting so there is 1/10 chances to start in a pit and 1/20 to start on the evil Wumpus ;
-- Add the aenerobu 
+- The game is not exactly comfortable to play, better play `wump(6)` directly.
 
 ## How to play
 

@@ -6,7 +6,6 @@
     hit: no
     testing: no
     debug: no
-    maxrooms: 20
     commands: ['move', 'shoot']
     cave_type: 'dodecahedron'
   tasks:

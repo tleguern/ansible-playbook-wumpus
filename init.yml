@@ -1,7 +1,6 @@
 ---
 - name: Init | Generate the Cave's rooms.
   include_tasks: "cave-{{ cave_type }}.yml"
-  when: cave is not defined
 
 - name: Randomly pick hasards starting position.
   include_tasks: hazard-position.yml
