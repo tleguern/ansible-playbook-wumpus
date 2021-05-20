@@ -4,7 +4,6 @@
   become: no
   gather_facts: no
   vars:
-    arrows: 1
     cave:
       "1":
         connect: ["2", "5", "8"]
@@ -110,6 +109,10 @@
     - name: Teleport to room 2.
       set_fact:
         position: "2"
+
+    - name: Create one arrow in the quiver.
+      set_fact:
+        arrows: "1"
 
     - name: Feel around.
       include_tasks: ../../sensations.yml

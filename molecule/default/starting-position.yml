@@ -4,9 +4,6 @@
   become: no
   gather_facts: no
   vars:
-    testing: yes
-    _continue: yes
-    maxrooms: 5
     cave:
       "1":
         connect: ["2", "3"]
@@ -40,6 +37,12 @@
         #     \       /
         #   [4|B]---[5| ]
   tasks:
+    - name: Initialize important variables.
+      set_fact:
+        testing: yes
+        _continue: yes
+        maxrooms: 5
+
     - name: Select a good starting position.
       include_tasks: ../../player-position.yml
 

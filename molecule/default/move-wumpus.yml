@@ -3,10 +3,6 @@
   become: no
   gather_facts: no
   vars:
-    death: no
-    hit: no
-    testing: yes
-    failedhit: no
     cave:
       "1":
         connect: ["2"]
@@ -21,6 +17,13 @@
         wumpus: true
         pit: false
   tasks:
+    - name: Initialize important variables.
+      set_fact:
+        death: no
+        hit: no
+        testing: yes
+        failedhit: no
+
     - name: Teleport to room 2.
       set_fact:
         position: "2"

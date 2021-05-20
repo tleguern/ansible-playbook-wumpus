@@ -4,7 +4,6 @@
   become: no
   gather_facts: no
   vars:
-    testing: yes
     cave:
       "1":
         connect: ["2", "3"]
@@ -19,6 +18,10 @@
         pit: no
         wumpus: no
   tasks:
+    - name: Initialize important variables.
+      set_fact:
+        testing: yes
+
     - name: Teleport to room 1.
       set_fact:
         position: "1"
