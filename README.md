@@ -20,16 +20,17 @@ Here is a list of intended features for first release:
 - [X] Smelling nearby wumpii ;
 - [X] Shoot arrows ;
 - [X] Hard stop for arrows at 4 rooms ;
-- [ ] Random chances that the arrow fail after 3 rooms ;
-- [ ] The Wumpus awakens and moves on shot failure ;
+- [X] The Wumpus awakens and moves on shot failure ;
 
 Features not fit for the first release:
 
+- [ ] Random chances that the arrow fail after 3 rooms ;
 - [ ] Difficulty selection ;
-- [ ] Generation of different shapes of cave as in `Hunt the Wumpus II`;
+- [ ] Generation of different shapes of cave as in `Hunt the Wumpus II` ;
 - [ ] Add _tumaeros_: anaerobic termite, arrows eaters ;
 - [ ] The player can survive walking on a pit (1/6) ;
-- [ ] The Wumpus can awaken and move on bumping walls (1/6);
+- [ ] The Wumpus can awaken and move on bumping walls (1/6) ;
+- [ ] Bats can drop player on other bats.
 
 ## Caveats
 

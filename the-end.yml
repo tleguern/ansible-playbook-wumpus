@@ -12,7 +12,20 @@
     - death
     - cave[position]['pit']
 
-- name: The End | Game over by evil Wumpus.
+- name: The End | Game over by evil Wumpus walking to you.
+  set_fact:
+    endmsg: |
+      Oh dear. All the commotion has managed to awaken the evil Wumpus, who
+      has chosen to walk into this very room! Your eyes open wide as they behold
+      the great sucker-footed bulk that is the Wumpus; the mouth of the Wumpus
+      also opens wide as the evil beast beholds dinner.
+      *ROAR* *chomp* *snurfle* *chomp*!
+  when:
+    - death
+    - failedhit
+    - cave[position]['wumpus']
+
+- name: The End | Game over by walking to the evil Wumpus.
   set_fact:
     endmsg: |
       *ROAR* *chomp* *snurfle* *chomp*!
@@ -23,6 +36,7 @@
       pass out from the stench!
   when:
     - death
+    - not failedhit
     - cave[position]['wumpus']
 
 - name: The End | Game over by lack of arrows.

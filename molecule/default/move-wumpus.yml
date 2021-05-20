@@ -1,0 +1,48 @@
+- name: Wumpus move on shoot fail
+  hosts: all
+  become: no
+  gather_facts: no
+  vars:
+    death: no
+    hit: no
+    testing: yes
+    failedhit: no
+    cave:
+      "1":
+        connect: ["2"]
+        wumpus: false
+        pit: false
+      "2":
+        connect: ["1", "3"]
+        wumpus: false
+        pit: false
+      "3":
+        connect: ["2"]
+        wumpus: true
+        pit: false
+  tasks:
+    - name: Teleport to room 2.
+      set_fact:
+        position: "2"
+
+    - name: Create one arrow in the quiver.
+      set_fact:
+        arrows: "1"
+
+    - name: Shoot from room 2 to 1.
+      include_tasks: ../../shoot.yml
+      vars:
+        rooms: "1"
+
+    - name: Wumpus moves to a random room which happens to be 2.
+      include_tasks: ../../move-wumpus.yml
+
+    - name: Should die by being walked on by the evil Wumpus.
+      assert:
+        that:
+          - arrow == "1"
+          - arrows == "0"
+          - death
+          - not hit
+          - failedhit
+          - cave[position]['wumpus']

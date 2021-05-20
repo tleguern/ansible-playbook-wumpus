@@ -1,0 +1,27 @@
+---
+- name: Find where is the Wumpus.
+  set_fact:
+    wumpuspos: "{{ item.key }}"
+  with_dict: "{{ cave }}"
+  loop_control:
+    label: 'redacted'
+  when: item.value.wumpus
+
+- name: Pick a room for the Wumpus to move to.
+  set_fact:
+    wumpusmove: "{{ (cave|json_query(query)|list|first).connect | random }}"
+  vars:
+    query: '* | [?wumpus]'
+
+- name: Update the cave.
+  set_fact:
+    cave: "{{ cave | combine({ wumpuspos|string: {'wumpus': false}}, recursive=True) }}"
+
+- name: Update the cave.
+  set_fact:
+    cave: "{{ cave | combine({ wumpusmove|string: {'wumpus': true}}, recursive=True) }}"
+
+- name: Did the Wumpus moved onto you?
+  set_fact:
+    death: yes
+  when: cave[position]['wumpus']

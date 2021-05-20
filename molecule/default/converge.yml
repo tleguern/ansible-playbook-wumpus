@@ -15,3 +15,4 @@
 - import_playbook: bogus-shoot.yml
 - import_playbook: deaths.yml
 - import_playbook: starting-position.yml
+- import_playbook: move-wumpus.yml
