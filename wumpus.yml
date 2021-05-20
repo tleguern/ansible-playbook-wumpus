@@ -2,12 +2,8 @@
 - hosts: localhost
   gather_facts: no
   vars:
-    death: no
-    hit: no
-    testing: no
-    debug: no
-    commands: ['move', 'shoot']
     cave_type: 'dodecahedron'
+    arrows: 5
   tasks:
     - name: Initialize the game.
       include_tasks: init.yml

@@ -1,4 +1,13 @@
 ---
+- name: Initialize important variables.
+  set_fact:
+    death: no
+    hit: no
+    testing: no
+    debug: no
+    commands: ['move', 'shoot']
+    failedhit: no
+
 - name: Init | Generate the Cave's rooms.
   include_tasks: "cave-{{ cave_type }}.yml"
 
@@ -12,11 +21,6 @@
     - pit
   loop_control:
     loop_var: what
-
-- name: Init | Set initial number of arrows.
-  set_fact:
-    arrows: 5
-  when: arrows is not defined
 
 - name: Init | Define position loop variable.
   set_fact:

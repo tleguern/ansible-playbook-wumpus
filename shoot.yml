@@ -36,7 +36,7 @@
       set_fact:
         arrow: "{{ position }}"
 
-    - name: Shoot | Define necessary variables.
+    - name: Shoot | Reset necessary variables.
       set_fact:
         roomcnt: "0"
         toofar: no
