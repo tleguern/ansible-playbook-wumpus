@@ -42,11 +42,12 @@ Simply run the following command:
 
 ```sh
 $ ansible-playbook wumpus.yml
+...
 ```
 
 There are two possible actions: `move` to an adjacent room (be careful about bottomless pits, giant bats or the occasional Wumpus) or `shoot` a crooked arrow to a series of rooms.
 
-Here is an asciicast recording of losing session:
+Here is an asciicast recording of a losing session:
 
 [![asciicast](https://asciinema.org/a/Glv8slBLl0DzKC3xLanwKfdag.svg)](https://asciinema.org/a/Glv8slBLl0DzKC3xLanwKfdag)
 
