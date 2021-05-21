@@ -1,44 +1,18 @@
 # Ansible Playbook: Hunt the Wumpus
 
 This project is an attempt at porting the old computer game `Hunt the Wumpus` written by Gregory Yob in 1973 to Ansible.
-The work is still in progress.
+If you do not know this piece of gaming history have a look at [the Wikipedia article](https://en.wikipedia.org/wiki/Hunt_the_Wumpus) about it or the [two](https://www.filfre.net/2011/05/hunt-the-wumpus-part-1/) [articles](https://www.filfre.net/2011/05/hunt-the-wumpus-part-2/) written by Jimmy Maher AKA The Digital Antiquarian.
 
-Here is a list of intended features for first release:
+The goal is to navigate your way inside a strange cave with ever wrapping tunnels filled with hazards such as bottomless pits, giant bats and the awful, evil Wumpus.
+This terrible, sucker footed creature sleeps somewhere in the cave, awaiting an adventurer fool enough to wander in its lair.
+His teeth are long and sharp, quite adapted for a carnivore.
+Fortunately you are equipped with magically enhanced crooked arrows able to fly in strange directions and even turn around.
 
-- [X] Generate a random dodecahedron ;
-- [X] Generate a random position for the bats ;
-- [X] Generate a random position for the pits ;
-- [X] Generate a random position for the Wumpus ;
-- [X] Generate a not too unfair position for the player ;
-- [X] Move around the map ;
-- [X] Bats transport the player ;
-- [X] Death by falling in a pit ;
-- [X] Death by being eaten by the evil Wumpus ;
-- [X] Death by firing the last arrow ;
-- [X] Feeling nearby pits ;
-- [X] Hearing nearby bats ;
-- [X] Smelling nearby wumpii ;
-- [X] Shoot arrows ;
-- [X] Hard stop for arrows at 4 rooms ;
-- [X] The Wumpus awakens and moves on shot failure ;
-
-Features not fit for the first release:
-
-- [ ] Random chances that the arrow fail after 3 rooms ;
-- [ ] Difficulty selection ;
-- [ ] Generation of different shapes of cave as in `Hunt the Wumpus II` ;
-- [ ] Add _tumaeros_: anaerobic termite, arrows eaters ;
-- [ ] The player can survive walking on a pit (1/6) ;
-- [ ] The Wumpus can awaken and move on bumping walls (1/6) ;
-- [ ] Bats can drop player on other bats.
-
-## Caveats
-
-- The game is not exactly comfortable to play, better play `wump(6)` directly.
+Be careful not to shoot yourself!
 
 ## How to play
 
-Simply run the following command:
+Simply run the following command (of course ansible should be installed):
 
 ```sh
 $ ansible-playbook wumpus.yml
@@ -50,6 +24,23 @@ There are two possible actions: `move` to an adjacent room (be careful about bot
 Here is an asciicast recording of a losing session:
 
 [![asciicast](https://asciinema.org/a/Glv8slBLl0DzKC3xLanwKfdag.svg)](https://asciinema.org/a/Glv8slBLl0DzKC3xLanwKfdag)
+
+## TODO
+
+Here is a list of features yet to be implemented:
+
+- [ ] Random chances that the arrow fail after 3 rooms ;
+- [ ] Bats can drop player on other bats.
+- [ ] Generation of different shapes of cave as in `Hunt the Wumpus II` ;
+- [ ] Add _tumaeros_: anaerobic termite, arrows eaters ;
+- [ ] The player can survive walking on a pit (1/6) ;
+- [ ] The Wumpus can awaken and move on bumping walls (1/6) ;
+- [ ] Difficulty selection ;
+
+## Caveats
+
+Ansible is not exactly a comfortable medium to play.
+Consider yourself warned.
 
 ## License
 
