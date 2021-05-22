@@ -6,6 +6,7 @@ packages:
   - py3-pymysql
   - py3-wheel
   - py3-yamllint
+  - py3-jmespath
   - ansible
 sources:
   - https://git.sr.ht/~tleguern/ansible-playbook-wumpus

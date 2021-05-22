@@ -12,7 +12,12 @@ Be careful not to shoot yourself!
 
 ## How to play
 
-Simply run the following command (of course ansible should be installed):
+The following packages are necessary:
+
+- ansible
+- python-jmespath
+
+Simply run the following command:
 
 ```sh
 $ ansible-playbook wumpus.yml
