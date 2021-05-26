@@ -4,7 +4,6 @@
     death: no
     hit: no
     testing: no
-    debug: no
     commands: ['move', 'shoot']
     failedhit: no
 

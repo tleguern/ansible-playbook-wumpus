@@ -19,12 +19,6 @@
 - include_tasks: the-end.yml
   when: death or hit
 
-- name: Debug
-  include_tasks: debug.yml
-  when:
-    - not hit
-    - debug|bool
-
 - name: Sensations.
   include_tasks: sensations.yml
   when: not hit

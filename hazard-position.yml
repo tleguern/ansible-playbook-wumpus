@@ -2,9 +2,5 @@
 - set_fact:
     pick: "{{ (maxrooms|int + 1) | random(start=1) }}"
 
-- debug:
-    msg: "Generating a {{ what }} in room {{ pick }}"
-  when: debug|bool
-
 - set_fact:
     cave: "{{ cave | combine({ pick|string: {what|string: true} }, recursive=True) }}"
