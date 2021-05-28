@@ -2,7 +2,7 @@
 
 This project is an attempt at porting the old computer game `Hunt the Wumpus` written by Gregory Yob in 1973 to Ansible.
 If you do not know this piece of gaming history have a look at [the Wikipedia article](https://en.wikipedia.org/wiki/Hunt_the_Wumpus) about it or the [two](https://www.filfre.net/2011/05/hunt-the-wumpus-part-1/) [articles](https://www.filfre.net/2011/05/hunt-the-wumpus-part-2/) written by Jimmy Maher AKA The Digital Antiquarian.
-In-game texts come from the [historic BSD port](http://bxr.su/search?q=wump.c&defs=&refs=&path=&project=DragonFly&project=FreeBSD&project=NetBSD&project=OpenBSD).
+In-game texts come from the [historic BSD port](http://bxr.su/search?q=wump.c&defs=&refs=&path=&project=DragonFly&project=FreeBSD&project=NetBSD&project=OpenBSD) from 1989 written in C by [Dave Taylor](https://www.askdavetaylor.com/about_dave/).
 
 The goal is to navigate your way inside a strange cave with ever wrapping tunnels filled with hazards such as bottomless pits, giant bats and the awful, evil Wumpus.
 This terrible, sucker footed creature sleeps somewhere in the cave, awaiting an adventurer fool enough to wander in its lair.
